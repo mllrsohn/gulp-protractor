@@ -1,0 +1,42 @@
+{
+  "name": "gulp-protactor",
+  "version": "0.0.0",
+  "description": "A plugin for Gulp",
+  "keywords": [
+    "gulpplugin"
+  ],
+  "homepage": "https://github.com/steffenmllr/gulp-protactor",
+  "bugs": "https://github.com/steffenmllr/gulp-protactor/issues",
+  "author": {
+    "name": "Steffen Müller",
+    "email": "",
+    "url": "https://github.com/steffenmllr"
+  },
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/steffenmllr/gulp-protactor.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "event-stream": "*",
+    "protractor": "~0.15.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.14.0",
+    "sinon": "~1.7.3",
+    "expect.js": "~0.2.0",
+    "gulp-util": "~2.2.2"
+  },
+  "engines": {
+    "node": ">=0.8.0",
+    "npm": ">=1.2.10"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
+}
