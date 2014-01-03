@@ -1,6 +1,6 @@
 # gulp-protractor [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
-> protractor plugin for [gulp](https://github.com/wearefractal/gulp)
+> Run your [angular protractor](https://github.com/angular/protractor) tests with [gulp](https://github.com/wearefractal/gulp)
 
 ## Usage
 
@@ -20,6 +20,29 @@ gulp.src(["./src/tests/*.js"])
 		configFile: "test/protractor.config.js"
 	}))	
 ```
+
+### Protractor Webdriver
+You have to start a standalone selenium server first. [Please read the offial instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server). 
+
+If you don't want to install protractor globally, you can install it in your current directory with:
+
+```shell
+npm install --save-dev protractor
+```
+
+and use this snippet to install and run the websever
+
+```javascript
+// webdriver setup and run
+gulp.task('webdriver', function(cb) {
+    spawn('./node_modules/.bin/webdriver-manager', ['update'], { stdio: 'inherit' }).on('close', function() {
+        spawn('./node_modules/.bin/webdriver-manager', ['start'], { stdio: 'inherit' }).on('close', function() {
+            cb();
+        });
+    });
+});
+```
+
 
 ## API
 
