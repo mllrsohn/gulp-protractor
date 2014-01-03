@@ -1,9 +1,9 @@
 {
   "name": "gulp-protractor",
   "version": "0.0.1",
-  "description": "A helper plugin for protactor and gulp",
+  "description": "A helper for protactor and gulp",
   "keywords": [
-    "gulpplugin",
+    "gulpfriendly",
     "protactor"
   ],
   "homepage": "https://github.com/mllrsohn/gulp-protractor",
