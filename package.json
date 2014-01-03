@@ -1,12 +1,13 @@
 {
-  "name": "gulp-protactor",
-  "version": "0.0.0",
-  "description": "A plugin for Gulp",
+  "name": "gulp-protractor",
+  "version": "0.0.1",
+  "description": "A helper plugin for protactor and gulp",
   "keywords": [
-    "gulpplugin"
+    "gulpplugin",
+    "protactor"
   ],
-  "homepage": "https://github.com/steffenmllr/gulp-protactor",
-  "bugs": "https://github.com/steffenmllr/gulp-protactor/issues",
+  "homepage": "https://github.com/mllrsohn/gulp-protractor",
+  "bugs": "https://github.com/mllrsohn/gulp-protractor/issues",
   "author": {
     "name": "Steffen Müller",
     "email": "",
@@ -15,7 +16,7 @@
   "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/steffenmllr/gulp-protactor.git"
+    "url": "git://github.com/mllrsohn/gulp-protractor.git"
   },
   "scripts": {
     "test": "mocha"

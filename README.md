@@ -39,8 +39,8 @@ The path to your protractor config
 [npm-url]: https://npmjs.org/package/gulp-protractor
 [npm-image]: https://badge.fury.io/js/gulp-protractor.png
 
-[travis-url]: http://travis-ci.org/steffenmllr/gulp-protractor
-[travis-image]: https://secure.travis-ci.org/steffenmllr/gulp-protractor.png?branch=master
+[travis-url]: http://travis-ci.org/mllrsohn/gulp-protractor
+[travis-image]: https://secure.travis-ci.org/mllrsohn/gulp-protractor.png?branch=master
 
-[depstat-url]: https://david-dm.org/steffenmllr/gulp-protractor
-[depstat-image]: https://david-dm.org/steffenmllr/gulp-protractor.png
+[depstat-url]: https://david-dm.org/mllrsohn/gulp-protractor
+[depstat-image]: https://david-dm.org/mllrsohn/gulp-protractor.png
