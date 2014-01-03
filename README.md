@@ -33,6 +33,8 @@ npm install --save-dev protractor
 and use this snippet to install and run the websever
 
 ```javascript
+var spawn = require('child_process').spawn;
+
 // webdriver setup and run
 gulp.task('webdriver', function(cb) {
     spawn('./node_modules/.bin/webdriver-manager', ['update'], { stdio: 'inherit' }).on('close', function() {
