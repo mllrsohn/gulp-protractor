@@ -1,6 +1,11 @@
-var protractor = require('gulp-protractor');
 var gulp = require('gulp');
-var spawn = require('child_process').spawn;
+
+var protractor = require('gulp-protractor').protractor;
+var webdriver = require('gulp-protractor').webdriver;
+
+
+// Setting up the webdriver
+gulp.task('webdriver', webdriver);
 
 // Setting up the test task
 gulp.task('protractor', function() {
@@ -9,11 +14,3 @@ gulp.task('protractor', function() {
     }));
 });
 
-// webdriver setup and run
-gulp.task('webdriver', function(cb) {
-    spawn('./node_modules/.bin/webdriver-manager', ['update'], { stdio: 'inherit' }).on('close', function() {
-        spawn('./node_modules/.bin/webdriver-manager', ['start'], { stdio: 'inherit' }).on('close', function() {
-            cb();
-        });
-    });
-});

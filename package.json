@@ -1,6 +1,6 @@
 {
   "name": "gulp-protractor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A helper for protactor and gulp",
   "keywords": [
     "gulpfriendly",
@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "event-stream": "*",
-    "protractor": "~0.15.0"
+    "protractor": "~0.15.0",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "mocha": "~1.14.0",
