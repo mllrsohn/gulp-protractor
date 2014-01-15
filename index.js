@@ -13,8 +13,10 @@ var protractor = function(options) {
 	return es.through(function(file) {
 		files.push(file.path);
 	}, function() {
+
 		var args = [path.resolve(options.configFile)],
 			stream = this;
+
 		// Attach Files, if any
 		if (files.length) {
 			args.push('--specs');
