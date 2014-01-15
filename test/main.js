@@ -24,6 +24,9 @@ describe('gulp-protactor: protactor', function() {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
+            expect(args[1]).to.equal('--browser');
+            expect(args[2]).to.equal('Chrome');
+            expect(args[3]).to.equal('--chrome-only');
             child_process.spawn.restore();
             done();
 
