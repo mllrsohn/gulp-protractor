@@ -2,25 +2,76 @@
 'use strict';
 
 var fs = require('fs'),
-	es = require('event-stream'),
-	expect = require('expect.js'),
-	sinon = require('sinon'),
+    es = require('event-stream'),
+    expect = require('expect.js'),
+    sinon = require('sinon'),
     path = require('path');
 
 require('mocha');
 
 var gutil = require('gulp-util'),
-	protactor = require('../').protractor,
+    protactor = require('../').protractor,
     webdriver = require('../').webdriver,
-	child_process = require('child_process'),
-	events = require('events');
+    child_process = require('child_process'),
+    events = require('events');
 
 
 describe('gulp-protactor: protactor', function() {
 
-	it('should pass the test-files to protactor via arg', function(done) {
+    it('should pass in the args into the protactor call', function(done) {
         var fakeProcess = new events.EventEmitter();
-		var spy = sinon.stub(child_process, 'spawn', function (cmd, args, options) {
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+
+            expect(path.basename(cmd)).to.equal('protractor');
+            expect(path.basename(args[0])).to.equal('protactor.config.js');
+            child_process.spawn.restore();
+            done();
+
+            return new events.EventEmitter();
+        });
+        var srcFile = new gutil.File({
+            path: 'test/fixtures/test.js',
+            cwd: 'test/',
+            base: 'test/fixtures',
+            contents: null
+        });
+
+        var stream = protactor({
+            configFile: 'test/fixtures/protactor.config.js',
+            args: {
+                browser: 'Chrome',
+                chromeOnly: true
+            }
+        });
+
+        stream.write(srcFile);
+        stream.end();
+    });
+
+
+    it('should pass in debug if debug is true', function(done) {
+        var fakeProcess = new events.EventEmitter();
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+
+            expect(path.basename(cmd)).to.equal('protractor');
+            expect(path.basename(args[0])).to.equal('debug');
+            expect(path.basename(args[1])).to.equal('protactor.config.js');
+            child_process.spawn.restore();
+            done();
+
+            return new events.EventEmitter();
+        });
+
+        var stream = protactor({
+            configFile: 'test/fixtures/protactor.config.js',
+            debug: true
+        });
+
+        stream.end();
+    });
+    it('should pass the test-files to protactor via arg', function(done) {
+        var fakeProcess = new events.EventEmitter();
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
@@ -33,24 +84,24 @@ describe('gulp-protactor: protactor', function() {
             return new events.EventEmitter();
         });
 
-		var srcFile = new gutil.File({
-			path: 'test/fixtures/test.js',
-			cwd: 'test/',
-			base: 'test/fixtures',
-			contents: null
-		});
+        var srcFile = new gutil.File({
+            path: 'test/fixtures/test.js',
+            cwd: 'test/',
+            base: 'test/fixtures',
+            contents: null
+        });
 
-		var stream = protactor({
-			configFile: 'test/fixtures/protactor.config.js'
-		});
+        var stream = protactor({
+            configFile: 'test/fixtures/protactor.config.js'
+        });
 
-		stream.write(srcFile);
-		stream.end();
+        stream.write(srcFile);
+        stream.end();
 
-	});
+    });
 
-	it('shouldnt pass the test-files to protactor if there are none', function(done) {
-        var spy = sinon.stub(child_process, 'spawn', function (cmd, args, options) {
+    it('shouldnt pass the test-files to protactor if there are none', function(done) {
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
@@ -76,7 +127,7 @@ describe('gulp-protactor: protactor', function() {
 
         stream.end();
 
-	});
+    });
 });
 
 
@@ -86,9 +137,9 @@ describe('gulp-protactor: webdriver', function() {
 
         var fakeProcess = new events.EventEmitter();
         var seconds_call = false;
-        var spy = sinon.stub(child_process, 'spawn', function (cmd, args, options) {
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
             expect(path.basename(cmd)).to.equal('webdriver-manager');
-            if(!seconds_call) {
+            if (!seconds_call) {
                 expect(args[0]).to.equal('update');
             } else {
                 expect(args[0]).to.equal('start');

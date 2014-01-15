@@ -39,6 +39,19 @@ Default: `null`
 
 The path to your protractor config
 
+#### options.args
+Type: `Array`  
+Default: `[]`
+
+Arguments get passed directly to the protractor call [Read the docs for more information](https://github.com/angular/protractor/blob/master/docs/getting-started.md#setup-and-config)
+
+
+#### options.debug
+Type: `Boolean`  
+Default: `false`
+
+Runs protractor with the debug flag [Protractor Debugging documentation](https://github.com/angular/protractor/blob/master/docs/debugging.md#timeouts)
+
 
 ## License
 
