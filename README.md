@@ -4,10 +4,10 @@
 
 ## Usage
 
-First, install `gulp-protractor` as a development dependency:
+First, install `gulp-protractor` AND `protractor` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-protractor
+npm install --save-dev gulp-protractor protractor
 ```
 
 Then, add it to your `gulpfile.js`:
