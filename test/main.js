@@ -131,6 +131,33 @@ describe('gulp-protactor: protactor', function() {
         stream.end();
 
     });
+
+    it('should propogate protactor exit code', function(done) {
+        var fakeProcess = new events.EventEmitter();
+        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+            child_process.spawn.restore();
+            process.nextTick(function() { fakeProcess.emit('exit', 255) });
+            fakeProcess.kill = function() {};
+            return fakeProcess;
+        });
+
+        var srcFile = new gutil.File({
+            path: 'test/fixtures/test.js',
+            cwd: 'test/',
+            base: 'test/fixtures',
+            contents: null
+        });
+
+        var stream = protactor({
+            configFile: 'test/fixtures/protactor.config.js'
+        });
+
+        stream.write(srcFile);
+        stream.end();
+        stream.on('error', function(err) {
+            done();
+        })
+    });
 });
 
 
