@@ -156,7 +156,7 @@ describe('gulp-protactor: protactor', function() {
         stream.end();
         stream.on('error', function(err) {
             done();
-        })
+        });
     });
 });
 

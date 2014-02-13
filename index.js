@@ -3,6 +3,7 @@ var path = require('path');
 var child_process = require('child_process');
 var async = require('async');
 var dargs = require('dargs');
+var PluginError = require('gulp-util').PluginError;
 
 var protractor = function(options) {
 	var files = [],
@@ -12,7 +13,7 @@ var protractor = function(options) {
 	args = options.args || {};
 
 	if (!options.configFile) {
-		throw new Error('Please specify the protractor config file');
+		this.emit('error', new PluginError('gulp-protractor', 'Please specify the protractor config file'));
 	}
 	return es.through(function(file) {
 		files.push(file.path);
@@ -43,7 +44,7 @@ var protractor = function(options) {
 			}
 			if (stream) {
 				if (code) {
-					stream.emit('error', new Error("protractor exited with " + code));
+					stream.emit('error', new PluginError('gulp-protractor', 'protractor exited with code ' + code));
 				}
 				else {
 					stream.emit('end');

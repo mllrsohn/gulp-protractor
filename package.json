@@ -23,18 +23,20 @@
   },
   "dependencies": {
     "event-stream": "~3.1.0",
-    "protractor": "~0.16.1",
-    "async": "~0.2.9",
+    "async": "~0.2.10",
     "dargs": "~0.1.0"
   },
+  "peerDependencies": {
+    "protractor": "~0.18.1"
+  },
   "devDependencies": {
-    "mocha": "~1.17.0",
-    "sinon": "~1.7.3",
+    "mocha": "~1.17.1",
+    "sinon": "~1.8.1",
     "expect.js": "~0.2.0",
-    "gulp-util": "~2.2.10"
+    "gulp-util": "~2.2.14"
   },
   "engines": {
-    "node": ">=0.8.0",
+    "node": ">=0.10.0",
     "npm": ">=1.2.10"
   },
   "licenses": [
