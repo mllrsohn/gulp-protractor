@@ -37,12 +37,17 @@ var protractor = function(options) {
 
 		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'), args, {
 			stdio: 'inherit'
-		}).on('exit', function() {
+		}).on('exit', function(code) {
 			if (child) {
 				child.kill();
 			}
 			if (stream) {
-				stream.emit('end');
+				if (code) {
+					stream.emit('error', new Error("protractor exited with " + code));
+				}
+				else {
+					stream.emit('end');
+				}
 			}
 		});
 	});
