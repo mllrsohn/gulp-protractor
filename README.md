@@ -26,7 +26,7 @@ gulp.src(["./src/tests/*.js"])
 You have to update and start a standalone selenium server. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server). You can use the build in webdriver snippet. 
 
 ```javascript
-var protractor = require("gulp-protractor").webdriver;
+var webdriver = require("gulp-protractor").webdriver;
 gulp.task('webdriver', webdriver);
 ```
 
