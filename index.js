@@ -26,7 +26,7 @@ var protractor = function(options) {
 		}
 
 		// Pass in args
-		args = dargs(args);
+		args = dargs(args, ['seleniumAddress', 'seleniumServerJar', 'seleniumPort', 'rootElement', 'stackTrace', 'stackTrace']);
 
 		// Pass in the config file
 		args.unshift(options.configFile);
@@ -61,9 +61,19 @@ var webdriver_update = function(cb) {
 };
 
 var webdriver_start = function(cb) {
-	child_process.spawn('./node_modules/.bin/webdriver-manager', ['start'], {
-		stdio: 'inherit'
-	}).once('close', cb);
+	var child = child_process.spawn('./node_modules/.bin/webdriver-manager', ['start'], {
+		stdio: 'pipe'
+	});
+
+   	child.on('close', cb);
+
+    child.stdout.on('data', function(data) {
+      var sentinal = 'Started org.openqa.jetty.jetty.Server';
+      console.log(data.toString());
+      if (data.toString().indexOf(sentinal) !== -1) {
+        cb(null, child);
+      }
+    });
 };
 
 module.exports = {
