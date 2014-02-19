@@ -4,6 +4,7 @@ var child_process = require('child_process');
 var async = require('async');
 var dargs = require('dargs');
 var PluginError = require('gulp-util').PluginError;
+var winExt = /^win/.test(process.platform)?".cmd":"";
 
 var protractor = function(options) {
 	var files = [],
@@ -36,7 +37,7 @@ var protractor = function(options) {
 			args.unshift('debug');
 		}
 
-		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'), args, {
+		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'+winExt), args, {
 			stdio: 'inherit'
 		}).on('exit', function(code) {
 			if (child) {
@@ -55,13 +56,13 @@ var protractor = function(options) {
 };
 
 var webdriver_update = function(cb) {
-	child_process.spawn('./node_modules/.bin/webdriver-manager', ['update'], {
+	child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['update'], {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
 
 var webdriver_start = function(cb) {
-	var child = child_process.spawn('./node_modules/.bin/webdriver-manager', ['start'], {
+	var child = child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['start'], {
 		stdio: 'pipe'
 	});
 
