@@ -24,8 +24,9 @@ describe('gulp-protactor: protactor', function() {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--browser Chrome');
-            expect(args[2]).to.equal('--chrome-only');
+            expect(args[1]).to.equal('--browser');
+            expect(args[2]).to.equal('Chrome');
+            expect(args[3]).to.equal('--chrome-only');
             child_process.spawn.restore();
             done();
 
@@ -41,7 +42,7 @@ describe('gulp-protactor: protactor', function() {
         var stream = protactor({
             configFile: 'test/fixtures/protactor.config.js',
             args: [
-                '--browser Chrome',
+                '--browser', 'Chrome',
                 '--chrome-only'
             ]
         });
@@ -56,7 +57,8 @@ describe('gulp-protactor: protactor', function() {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--specs test/fixtures/test.js');
+            expect(args[1]).to.equal('--specs');
+            expect(args[2]).to.equal('test/fixtures/test.js');
 
             child_process.spawn.restore();
             done();

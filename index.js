@@ -22,7 +22,8 @@ var protractor = function(options) {
 
 		// Attach Files, if any
 		if (files.length) {
-			args.push('--specs ' + files.join(','));
+			args.push('--specs');
+      args.push(files.join(','));
 		}
 
 		// Pass in the config file
