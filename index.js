@@ -23,7 +23,7 @@ var protractor = function(options) {
 		// Attach Files, if any
 		if (files.length) {
 			args.push('--specs');
-      args.push(files.join(','));
+			args.push(files.join(','));
 		}
 
 		// Pass in the config file
@@ -53,25 +53,14 @@ var webdriver_update = function(cb) {
 	}).once('close', cb);
 };
 
-var webdriver_start = function(cb) {
+var webdriver_standalone = function(cb) {
 	var child = child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['start'], {
-		stdio: 'pipe'
-	});
-
-   	child.on('close', cb);
-
-    child.stdout.on('data', function(data) {
-      var sentinal = 'Started org.openqa.jetty.jetty.Server';
-      console.log(data.toString());
-      if (data.toString().indexOf(sentinal) !== -1) {
-        cb(null, child);
-      }
-    });
+		stdio: 'inherit'
+	}).once('close', cb);
 };
 
 module.exports = {
 	protractor: protractor,
-	webdriver: function(cb) {
-		async.series([webdriver_update, webdriver_start], cb);
-	}
+	webdriver_standalone: webdriver_standalone,
+	webdriver_update: webdriver_update
 };

@@ -28,7 +28,7 @@
     "gulp-util": "~2.2.14"
   },
   "peerDependencies": {
-    "protractor": "~0.18.1"
+    "protractor": "*"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
