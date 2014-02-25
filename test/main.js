@@ -24,9 +24,8 @@ describe('gulp-protactor: protactor', function() {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--browser');
-            expect(args[2]).to.equal('Chrome');
-            expect(args[3]).to.equal('--chrome-only');
+            expect(args[1]).to.equal('--browser Chrome');
+            expect(args[2]).to.equal('--chrome-only');
             child_process.spawn.restore();
             done();
 
@@ -41,45 +40,23 @@ describe('gulp-protactor: protactor', function() {
 
         var stream = protactor({
             configFile: 'test/fixtures/protactor.config.js',
-            args: {
-                browser: 'Chrome',
-                chromeOnly: true
-            }
+            args: [
+                '--browser Chrome',
+                '--chrome-only'
+            ]
         });
 
         stream.write(srcFile);
         stream.end();
     });
 
-
-    it('should pass in debug if debug is true', function(done) {
-        var fakeProcess = new events.EventEmitter();
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-
-            expect(path.basename(cmd)).to.equal('protractor');
-            expect(path.basename(args[0])).to.equal('debug');
-            expect(path.basename(args[1])).to.equal('protactor.config.js');
-            child_process.spawn.restore();
-            done();
-
-            return new events.EventEmitter();
-        });
-
-        var stream = protactor({
-            configFile: 'test/fixtures/protactor.config.js',
-            debug: true
-        });
-
-        stream.end();
-    });
     it('should pass the test-files to protactor via arg', function(done) {
         var fakeProcess = new events.EventEmitter();
         var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
             expect(path.basename(cmd)).to.equal('protractor');
             expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--specs');
-            expect(args[2]).to.equal('test/fixtures/test.js');
+            expect(args[1]).to.equal('--specs test/fixtures/test.js');
 
             child_process.spawn.restore();
             done();

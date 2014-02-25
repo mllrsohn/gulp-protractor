@@ -17,7 +17,8 @@ var protractor = require("gulp-protractor").protractor;
 
 gulp.src(["./src/tests/*.js"])
 	.pipe(protractor({
-		configFile: "test/protractor.config.js"
+		configFile: "test/protractor.config.js",
+    args: ['--baseUrl http://127.0.0.1:8000']
 	}))	
 	.on('error', function(e) { throw e })
 ```
@@ -45,14 +46,6 @@ Type: `Array`
 Default: `[]`
 
 Arguments get passed directly to the protractor call [Read the docs for more information](https://github.com/angular/protractor/blob/master/docs/getting-started.md#setup-and-config)
-
-
-#### options.debug
-Type: `Boolean`  
-Default: `false`
-
-Runs protractor with the debug flag [Protractor Debugging documentation](https://github.com/angular/protractor/blob/master/docs/debugging.md#timeouts)
-
 
 ## License
 
