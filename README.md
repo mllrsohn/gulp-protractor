@@ -7,7 +7,8 @@
 First, install `gulp-protractor` AND `protractor` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-protractor protractor
+npm install -g protractor
+npm install --save-dev gulp-protractor
 ```
 
 Then, add it to your `gulpfile.js`:
@@ -22,31 +23,6 @@ gulp.src(["./src/tests/*.js"])
 	}))	
 	.on('error', function(e) { throw e })
 ```
-
-### Protractor Webdriver
-You have to update and start a standalone selenium server. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server).  
-
-You can also ensure that the driver is installed by using the `webdriver_update` task. Have a look at the example folder.
-
-You have 2 options to start the selenium server.  
-
-The first one is to let Protractor handle it automatically, including stoping it once your tests are done.  
-To do that, simply point to the selenium jar in the protractor config file (you will need to update the version number accordingly) instead of the address:
-
-```javascript
-  // The file path to the selenium server jar ()
-  seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.39.0.jar',
-  // seleniumAddress: 'http://localhost:4444/wd/hub',
-```
-
-The second option is to let the gulp task handle it with the built-in webdriver snippet.  
-If you decide to start it that way, the task will keep running indefintely.
-
-```javascript
-var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
-gulp.task('webdriver_standalone', webdriver_standalone);
-```
-
 ## API
 
 ### protractor(options)
