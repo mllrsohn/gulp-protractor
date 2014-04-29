@@ -29,7 +29,7 @@ var protractor = function(options) {
 		// Pass in the config file
 		args.unshift(options.configFile);
 
-		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'+winExt), args, {
+		child = child_process.spawn(path.resolve('protractor'+winExt), args, {
 			stdio: 'inherit'
 		}).on('exit', function(code) {
 			if (child) {
