@@ -7,7 +7,8 @@
 First, install `gulp-protractor` AND `protractor` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-protractor protractor
+npm install -g protractor
+npm install --save-dev gulp-protractor
 ```
 
 Then, add it to your `gulpfile.js`:
