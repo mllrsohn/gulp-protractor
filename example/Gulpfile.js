@@ -19,8 +19,10 @@ gulp.task('webdriver_standalone', webdriver_standalone);
 
 
 // Setting up the test task
-gulp.task('protractor', ['webdriver_update'], function() {
+gulp.task('protractor', ['webdriver_update'], function(cb) {
     gulp.src(['example_spec.js']).pipe(protractor({
         configFile: 'protractor.conf.js',
-    })).on('error', function(e) { throw e });
+    })).on('error', function(e) {
+        console.log(e)
+    }).on('end', cb);        
 });
