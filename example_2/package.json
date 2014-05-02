@@ -6,6 +6,7 @@
     "gulp": "latest",
     "gulp-help": "~0.1.4",
     "gulp-protractor": "0.0.7",
-    "express": "3.5.0"
+    "express": "3.5.0",
+    "yargs": "^1.2.1"
   }
 }

@@ -8,11 +8,7 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  // Spec patterns are relative to the current working directly when
-  // protractor is called.
-  specs: ['tests/e2e/**/*.js'],
-
-  baseUrl: 'http://localhost:9000',
+  baseUrl: 'http://localhost:9001',
 
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
