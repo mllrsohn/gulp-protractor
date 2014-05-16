@@ -1,9 +1,42 @@
 var es = require('event-stream');
+var fs = require('fs');
 var path = require('path');
 var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
 var winExt = /^win/.test(process.platform)?".cmd":"";
+
+
+// optimization: cache for protractor binaries directory
+var protractorDir = null;
+
+function getProtractorDir() {
+	if (protractorDir) {
+		return protractorDir;
+	}
+	
+	// how deep are we wrt filesystem root?
+	var cwd = path.resolve(".");
+	var depth = /^win/.test(process.platform) ? cwd.match(/\\/g).length :  cwd.match(/\//g).length;
+	depth = depth - 1;
+	
+	console.log(cwd);
+	console.log(depth);
+	
+	var result = "./node_modules";
+	var count = 0;
+	while (count <= depth)
+	{
+		if (fs.existsSync(path.resolve(result + "/.bin/protractor")))
+		{
+			protractorDir = result + "/.bin";
+			return protractorDir;
+		}
+		result = "../" + result;
+		count++;
+	}
+	throw new Error("No protractor installation found.");	
+}
 
 var protractor = function(options) {
 	var files = [],
@@ -29,7 +62,7 @@ var protractor = function(options) {
 		// Pass in the config file
 		args.unshift(options.configFile);
 
-		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'+winExt), args, {
+		child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
 			stdio: 'inherit'
 		}).on('exit', function(code) {
 			if (child) {
@@ -48,13 +81,13 @@ var protractor = function(options) {
 };
 
 var webdriver_update = function(cb) {
-	child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['update'], {
+	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['update'], {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
 
 var webdriver_standalone = function(cb) {
-	var child = child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['start'], {
+	var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
