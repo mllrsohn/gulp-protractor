@@ -77,11 +77,27 @@ var protractor = function(options) {
 	});
 };
 
-var webdriver_update = function(cb) {
-	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['update'], {
+var webdriver_update = function(opts, cb) {
+	var callback = (cb ? cb : opts);
+	var options = (cb ? opts : null);
+	var args = ["update", "--standalone"];
+	if (options) {
+		if (options.browsers) {
+			options.browsers.forEach(function(element, index, array) {
+				args.push("--" + element);
+			});
+		}
+	}	
+	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
+
+var webdriver_update_specific = function(opts) {
+	return webdriver_update.bind(this, opts);
+};
+
+webdriver_update.bind(null, ["ie", "chrome"])
 
 var webdriver_standalone = function(cb) {
 	var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
@@ -92,5 +108,6 @@ var webdriver_standalone = function(cb) {
 module.exports = {
 	protractor: protractor,
 	webdriver_standalone: webdriver_standalone,
-	webdriver_update: webdriver_update
+	webdriver_update: webdriver_update,
+	webdriver_update_specific: webdriver_update_specific
 };
