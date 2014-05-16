@@ -20,9 +20,6 @@ function getProtractorDir() {
 	var depth = /^win/.test(process.platform) ? cwd.match(/\\/g).length :  cwd.match(/\//g).length;
 	depth = depth - 1;
 	
-	console.log(cwd);
-	console.log(depth);
-	
 	var result = "./node_modules";
 	var count = 0;
 	while (count <= depth)
