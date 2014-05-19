@@ -20,14 +20,14 @@ function getProtractorDir() {
 	var depth = /^win/.test(process.platform) ? cwd.match(/\\/g).length :  cwd.match(/\//g).length;
 	depth = depth - 1;
 	
-	var result = "./node_modules";
+	var result = __dirname + "/node_modules";
 	var count = 0;
 	while (count <= depth)
 	{
 		if (fs.existsSync(path.resolve(result + "/.bin/protractor")))
 		{
 			protractorDir = result + "/.bin";
-			return protractorDir;
+			return path.normalize(protractorDir);
 		}
 		result = "../" + result;
 		count++;
@@ -106,6 +106,7 @@ var webdriver_standalone = function(cb) {
 };
 
 module.exports = {
+	getProtractorDir: getProtractorDir,
 	protractor: protractor,
 	webdriver_standalone: webdriver_standalone,
 	webdriver_update: webdriver_update,

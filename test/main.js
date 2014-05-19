@@ -12,17 +12,29 @@ require('mocha');
 var gutil = require('gulp-util'),
     protactor = require('../').protractor,
     webdriver = require('../').webdriver,
+    getProtractorDir = require('../').getProtractorDir,
     child_process = require('child_process'),
     events = require('events');
 
+var winExt = /^win/.test(process.platform)?'.cmd':'';
 
+
+describe('gulp-protactor: getProtractorDir', function() {
+
+    it('should find the protractor installation', function(done) {
+		expect(getProtractorDir()).to.equal(path.resolve('./node_modules/.bin'));
+		done();
+	});
+});
+
+	
 describe('gulp-protactor: protactor', function() {
 
     it('should pass in the args into the protactor call', function(done) {
         var fakeProcess = new events.EventEmitter();
         var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
-            expect(path.basename(cmd)).to.equal('protractor');
+            expect(path.basename(cmd)).to.equal('protractor' + winExt);
             expect(path.basename(args[0])).to.equal('protactor.config.js');
             expect(args[1]).to.equal('--browser');
             expect(args[2]).to.equal('Chrome');
@@ -55,7 +67,7 @@ describe('gulp-protactor: protactor', function() {
         var fakeProcess = new events.EventEmitter();
         var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
-            expect(path.basename(cmd)).to.equal('protractor');
+            expect(path.basename(cmd)).to.equal('protractor'+winExt);
             expect(path.basename(args[0])).to.equal('protactor.config.js');
             expect(args[1]).to.equal('--specs');
             expect(args[2]).to.equal('test/fixtures/test.js');
@@ -85,7 +97,7 @@ describe('gulp-protactor: protactor', function() {
     it('shouldnt pass the test-files to protactor if there are none', function(done) {
         var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
-            expect(path.basename(cmd)).to.equal('protractor');
+            expect(path.basename(cmd)).to.equal('protractor'+winExt);
             expect(path.basename(args[0])).to.equal('protactor.config.js');
             expect(args[1]).to.be(undefined);
             expect(args[2]).to.be(undefined);
@@ -147,7 +159,7 @@ describe('gulp-protactor: webdriver', function() {
         var fakeProcess = new events.EventEmitter();
         var seconds_call = false;
         var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-            expect(path.basename(cmd)).to.equal('webdriver-manager');
+            expect(path.basename(cmd)).to.equal('webdriver-manager'+winExt);
             if (!seconds_call) {
                 expect(args[0]).to.equal('update');
             } else {
