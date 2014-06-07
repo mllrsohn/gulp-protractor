@@ -8,8 +8,6 @@ exports.config = {
     'browserName': 'chrome'
   },
 
-  baseUrl: 'http://localhost:9001',
-
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true,
