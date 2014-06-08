@@ -1,9 +1,39 @@
 var es = require('event-stream');
+var fs = require('fs');
 var path = require('path');
 var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
 var winExt = /^win/.test(process.platform)?".cmd":"";
+
+
+// optimization: cache for protractor binaries directory
+var protractorDir = null;
+
+function getProtractorDir() {
+	if (protractorDir) {
+		return protractorDir;
+	}
+	
+	// how deep are we wrt filesystem root?
+	var cwd = path.resolve(".");
+	var depth = /^win/.test(process.platform) ? cwd.match(/\\/g).length :  cwd.match(/\//g).length;
+	depth = depth - 1;
+	
+	var result = __dirname + "/node_modules";
+	var count = 0;
+	while (count <= depth)
+	{
+		if (fs.existsSync(path.resolve(result + "/.bin/protractor")))
+		{
+			protractorDir = result + "/.bin";
+			return path.normalize(protractorDir);
+		}
+		result = "../" + result;
+		count++;
+	}
+	throw new Error("No protractor installation found.");	
+}
 
 var protractor = function(options) {
 	var files = [],
@@ -29,8 +59,9 @@ var protractor = function(options) {
 		// Pass in the config file
 		args.unshift(options.configFile);
 
-		child = child_process.spawn(path.resolve('./node_modules/.bin/protractor'+winExt), args, {
-			stdio: 'inherit'
+		child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
+			stdio: 'inherit',
+			env: process.env
 		}).on('exit', function(code) {
 			if (child) {
 				child.kill();
@@ -47,20 +78,38 @@ var protractor = function(options) {
 	});
 };
 
-var webdriver_update = function(cb) {
-	child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['update'], {
+var webdriver_update = function(opts, cb) {
+	var callback = (cb ? cb : opts);
+	var options = (cb ? opts : null);
+	var args = ["update", "--standalone"];
+	if (options) {
+		if (options.browsers) {
+			options.browsers.forEach(function(element, index, array) {
+				args.push("--" + element);
+			});
+		}
+	}	
+	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
 
+var webdriver_update_specific = function(opts) {
+	return webdriver_update.bind(this, opts);
+};
+
+webdriver_update.bind(null, ["ie", "chrome"])
+
 var webdriver_standalone = function(cb) {
-	var child = child_process.spawn(path.resolve('./node_modules/.bin/webdriver-manager'+winExt), ['start'], {
+	var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
 		stdio: 'inherit'
 	}).once('close', cb);
 };
 
 module.exports = {
+	getProtractorDir: getProtractorDir,
 	protractor: protractor,
 	webdriver_standalone: webdriver_standalone,
-	webdriver_update: webdriver_update
+	webdriver_update: webdriver_update,
+	webdriver_update_specific: webdriver_update_specific
 };
