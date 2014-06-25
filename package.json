@@ -1,6 +1,6 @@
 {
   "name": "gulp-protractor",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "A helper for protactor and gulp",
   "keywords": [
     "gulpfriendly",
