@@ -5,7 +5,6 @@ var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
 var winExt = /^win/.test(process.platform)?".cmd":"";
-var util = require("util");
 
 // optimization: cache for protractor binaries directory
 var protractorDir = null;
