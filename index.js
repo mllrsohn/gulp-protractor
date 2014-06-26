@@ -6,7 +6,6 @@ var async = require('async');
 var PluginError = require('gulp-util').PluginError;
 var winExt = /^win/.test(process.platform)?".cmd":"";
 
-
 // optimization: cache for protractor binaries directory
 var protractorDir = null;
 
@@ -14,23 +13,12 @@ function getProtractorDir() {
 	if (protractorDir) {
 		return protractorDir;
 	}
-	
-	// how deep are we wrt filesystem root?
-	var cwd = path.resolve(".");
-	var depth = /^win/.test(process.platform) ? cwd.match(/\\/g).length :  cwd.match(/\//g).length;
-	depth = depth - 1;
-	
-	var result = __dirname + "/node_modules";
-	var count = 0;
-	while (count <= depth)
-	{
-		if (fs.existsSync(path.resolve(result + "/.bin/protractor")))
-		{
-			protractorDir = result + "/.bin";
-			return path.normalize(protractorDir);
-		}
-		result = "../" + result;
-		count++;
+	var result = require.resolve("protractor");
+	if (result) {
+		// result is now something like 
+		// c:\\Source\\gulp-protractor\\node_modules\\protractor\\lib\\protractor.js
+		protractorDir = path.resolve(path.join(path.dirname(result), "..", "..", ".bin"));
+		return protractorDir;
 	}
 	throw new Error("No protractor installation found.");	
 }
