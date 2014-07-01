@@ -79,7 +79,7 @@ var webdriver_update = function(opts, cb) {
 	}	
 	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
 		stdio: 'inherit'
-	}).once('close', cb);
+	}).once('close', callback);
 };
 
 var webdriver_update_specific = function(opts) {
