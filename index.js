@@ -38,6 +38,11 @@ var protractor = function(options) {
 	}, function() {
 		var stream = this;
 
+		// Enable debug mode
+		if (options.debug) {
+			args.push('debug');
+		}
+
 		// Attach Files, if any
 		if (files.length) {
 			args.push('--specs');

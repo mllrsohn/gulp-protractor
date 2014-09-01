@@ -63,6 +63,12 @@ Default: `[]`
 
 Arguments get passed directly to the protractor call [Read the docs for more information](https://github.com/angular/protractor/blob/master/docs/getting-started.md#setup-and-config)
 
+#### options.debug
+Type: `Boolean`
+Default: `false`
+
+Enables Protractor's [debug mode](https://github.com/angular/protractor/blob/master/docs/debugging.md), which can be used to pause tests during execution and to view stack traces.
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
