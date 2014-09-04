@@ -30,7 +30,7 @@ You can also ensure that the driver is installed by using the `webdriver_update`
 
 You have 2 options to start the selenium server.  
 
-The first one is to let Protractor handle it automatically, including stoping it once your tests are done.  
+The first one is to let Protractor handle it automatically, including stopping it once your tests are done.  
 To do that, simply point to the selenium jar in the protractor config file (you will need to update the version number accordingly) instead of the address:
 
 ```javascript
