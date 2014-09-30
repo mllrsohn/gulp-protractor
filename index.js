@@ -30,6 +30,21 @@ var protractor = function(options) {
 	options = options || {};
 	args = options.args || [];
 
+	if (options.args === Object(options.args) &&
+        Object.prototype.toString.call(options.args) !== '[object Array]') {
+
+        var tempArgs = [];
+
+        for (var arg in options.args) {
+            if (options.args.hasOwnProperty(arg)) {
+                tempArgs.push('--' + arg);
+                tempArgs.push(options.args[arg]);
+            }
+        }
+
+        options.args = tempArgs;
+    }
+
 	if (!options.configFile) {
 		this.emit('error', new PluginError('gulp-protractor', 'Please specify the protractor config file'));
 	}
