@@ -75,6 +75,16 @@ Default: `Undefined`
 
 Adds to or updates the environment variables before running Protractor.
 
+```javascript
+gulp.src(["./src/tests/*.js"])
+	.pipe(protractor({
+		configFile: "test/protractor.config.js",
+		env: {
+			NODE_ENV: 'development'
+		}
+	}))
+```
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
