@@ -52,6 +52,15 @@ var protractor = function(options) {
 		// Pass in the config file
 		args.unshift(options.configFile);
 
+		// add any supplied environment variables
+		if(options.env) {
+			for (var property in options.env) {
+				if (options.env.hasOwnProperty(property)) {
+					process.env[property] = options.env[property];
+				}
+			}
+		}
+
 		child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
 			stdio: 'inherit',
 			env: process.env

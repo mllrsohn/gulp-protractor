@@ -69,6 +69,12 @@ Default: `false`
 
 Enables Protractor's [debug mode](https://github.com/angular/protractor/blob/master/docs/debugging.md), which can be used to pause tests during execution and to view stack traces.
 
+#### options.env
+Type: `Object`
+Default: `Undefined`
+
+Adds to or updates the environment variables before running Protractor.
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
