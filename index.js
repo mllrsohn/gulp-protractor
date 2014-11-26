@@ -30,9 +30,6 @@ var protractor = function(options) {
 	options = options || {};
 	args = options.args || [];
 
-	if (!options.configFile) {
-		this.emit('error', new PluginError('gulp-protractor', 'Please specify the protractor config file'));
-	}
 	return es.through(function(file) {
 		files.push(file.path);
 	}, function() {
@@ -50,7 +47,9 @@ var protractor = function(options) {
 		}
 
 		// Pass in the config file
-		args.unshift(options.configFile);
+		if (options.configFile) {
+			args.unshift(options.configFile);
+		}
 
 		child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
 			stdio: 'inherit',
