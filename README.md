@@ -69,6 +69,46 @@ Default: `false`
 
 Enables Protractor's [debug mode](https://github.com/angular/protractor/blob/master/docs/debugging.md), which can be used to pause tests during execution and to view stack traces.
 
+
+# Running Protractor without a plugin
+If you want to avoid using a plugin at all, here are gulp tasks which install the webdriver and start protractor:
+
+First install the protractor package:
+```npm install --save-dev protractor```
+
+Then add these tasks to your ```gulpfile.js```:
+```javascript
+var gulp = require('gulp');
+var path = require('path');
+var child_process = require('child_process');
+
+function getProtractorBinary(binaryName){
+	var winExt = /^win/.test(process.platform)? '.cmd' : '';
+	var pkgPath = require.resolve('protractor');
+	var protractorDir = path.resolve(path.join(path.dirname(pkgPath), '..', 'bin'));
+	return path.join(protractorDir, '/'+binaryName+winExt);
+}
+
+gulp.task('protractor-install', function(done){
+	child_process.spawn(getProtractorBinary('webdriver-manager'), ['update'], {
+		stdio: 'inherit'
+	}).once('close', done);
+});
+
+gulp.task('protractor-run', function (done) {
+	var argv = process.argv.slice(3); // forward args to protractor
+	child_process.spawn(getProtractorBinary('protractor'), argv, {
+		stdio: 'inherit'
+	}).once('close', done);
+});
+
+```
+
+You can add command line arguments for protractor behind the gulp task:
+
+```gulp protractor-run --specs=runOnlyThisFile.js```
+
+
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
