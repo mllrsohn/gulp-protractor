@@ -77,7 +77,7 @@ var webdriver_update = function(opts, cb) {
 	if (options) {
 		if (options.browsers) {
 			options.browsers.forEach(function(element, index, array) {
-				args.push("--" + element);
+				args.push(element);
 			});
 		}
 	}	
