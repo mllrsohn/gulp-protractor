@@ -19,7 +19,7 @@ gulp.src(["./src/tests/*.js"])
 	.pipe(protractor({
 		configFile: "test/protractor.config.js",
 		args: ['--baseUrl', 'http://127.0.0.1:8000']
-	}))	
+	}))
 	.on('error', function(e) { throw e })
 ```
 
@@ -35,7 +35,7 @@ To do that, simply point to the selenium jar in the protractor config file (you 
 
 ```javascript
   // The file path to the selenium server jar ()
-  seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.44.0.jar',
+  seleniumServerJar: './node_modules/protractor/selenium/selenium-server-standalone-2.45.0.jar',
   // seleniumAddress: 'http://localhost:4444/wd/hub',
 ```
 

@@ -32,7 +32,7 @@
     "async": ">=0.7.0 <1.0.0",
     "dargs": ">=0.1.0 <4.0.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": "^1.0.0"
+    "protractor": "^2.0.0"
   },
   "devDependencies": {
     "mocha": ">=1.18.2 <3.0.0",
