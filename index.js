@@ -73,7 +73,7 @@ var protractor = function(options) {
 var webdriver_update = function(opts, cb) {
 	var callback = (cb ? cb : opts);
 	var options = (cb ? opts : null);
-	var args = ["update", "--standalone"];
+	var args = ["update", "--standalone", "--ie32"];
 	if (options) {
 		if (options.browsers) {
 			options.browsers.forEach(function(element, index, array) {
