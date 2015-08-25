@@ -5,6 +5,7 @@ var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
 var winExt = /^win/.test(process.platform)?".cmd":"";
+var env = process.env;
 
 // optimization: cache for protractor binaries directory
 var protractorDir = null;
@@ -13,6 +14,14 @@ function getProtractorDir() {
 	if (protractorDir) {
 		return protractorDir;
 	}
+	
+	// Use environment variable PROTRACTOR_DIR
+	// when user needs to use a specific protractor install.
+	if (env.PROTRACTOR_DIR) {
+		protractorDir = env.PROTRACTOR_DIR;
+		return protractorDir;
+	}
+
 	var result = require.resolve("protractor");
 	if (result) {
 		// result is now something like 
