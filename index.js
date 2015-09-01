@@ -77,7 +77,11 @@ var webdriver_update = function(opts, cb) {
 	if (options) {
 		if (options.browsers) {
 			options.browsers.forEach(function(element, index, array) {
-				args.push("--" + element);
+				if (element.toLowerCase() === "ie") {
+					args.push("--ie32");
+				} else {
+					args.push("--" + element);
+				}
 			});
 		}
 	}	
