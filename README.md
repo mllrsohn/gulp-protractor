@@ -40,7 +40,7 @@ To do that, simply point to the selenium jar in the protractor config file (you 
 ```
 
 The second option is to let the gulp task handle it with the built-in webdriver snippet.  
-If you decide to start it that way, the task will keep running indefintely.
+If you decide to start it that way, the task will keep running indefinitely.
 
 ```javascript
 var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
