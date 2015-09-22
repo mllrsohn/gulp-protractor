@@ -39,6 +39,20 @@ To do that, simply point to the selenium jar in the protractor config file (you 
   // seleniumAddress: 'http://localhost:4444/wd/hub',
 ```
 
+You can also use [glob](https://github.com/isaacs/node-glob) to automatically find the selenium jar. First, install `glob` with `npm install --save-dev glob`. Then...
+
+```javascript
+	var glob = require('glob');
+	
+	//Find the desired file
+	var seleniumServerJar = glob.sync('./node_modules/protractor/selenium/selenium-server-standalone-*.jar', { nodir: true })[0];
+	
+	exports.config = {
+		seleniumServerJar: seleniumServerJar,
+		//seleniumAddress: 'http://localhost:4444/wd/hub',
+	};
+```
+
 The second option is to let the gulp task handle it with the built-in webdriver snippet.  
 If you decide to start it that way, the task will keep running indefintely.
 
