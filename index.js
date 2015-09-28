@@ -17,7 +17,7 @@ function getProtractorDir() {
 	if (result) {
 		// result is now something like 
 		// c:\\Source\\gulp-protractor\\node_modules\\protractor\\lib\\protractor.js
-		protractorDir = path.resolve(path.join(path.dirname(result), "..", "..", ".bin"));
+		protractorDir = path.resolve(path.join(path.dirname(result), "..", "bin"));
 		return protractorDir;
 	}
 	throw new Error("No protractor installation found.");	
