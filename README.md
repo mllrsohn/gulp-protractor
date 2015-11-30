@@ -1,3 +1,5 @@
+### [This module is not up to date and needs a new maintainer.](https://github.com/mllrsohn/gulp-protractor/issues/87) 
+
 # gulp-protractor [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
 
 > Run your [angular protractor](https://github.com/angular/protractor) tests with [gulp](https://github.com/wearefractal/gulp)
