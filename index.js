@@ -15,12 +15,12 @@ function getProtractorDir() {
 	}
 	var result = require.resolve("protractor");
 	if (result) {
-		// result is now something like 
+		// result is now something like
 		// c:\\Source\\gulp-protractor\\node_modules\\protractor\\lib\\protractor.js
 		protractorDir = path.resolve(path.join(path.dirname(result), "..", "..", ".bin"));
 		return protractorDir;
 	}
-	throw new Error("No protractor installation found.");	
+	throw new Error("No protractor installation found.");
 }
 
 var protractor = function(options) {
@@ -32,6 +32,7 @@ var protractor = function(options) {
 
 	return es.through(function(file) {
 		files.push(file.path);
+		this.push(file);
 	}, function() {
 		var stream = this;
 
@@ -80,7 +81,7 @@ var webdriver_update = function(opts, cb) {
 				args.push("--" + element);
 			});
 		}
-	}	
+	}
 	child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
 		stdio: 'inherit'
 	}).once('close', callback);
