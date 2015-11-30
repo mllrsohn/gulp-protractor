@@ -1,36 +1,30 @@
 {
-  "name": "gulp-protractor",
+  "name": "gulp-protractor3",
   "version": "1.0.0",
-  "description": "A helper for protactor and gulp",
+  "description": "A helper for protactor and gulp, compatible with protractor 3.x and up",
   "keywords": [
     "gulpfriendly",
     "protractor"
   ],
-  "homepage": "https://github.com/mllrsohn/gulp-protractor",
-  "bugs": "https://github.com/mllrsohn/gulp-protractor/issues",
+  "homepage": "https://github.com/mattfritz/gulp-protractor",
+  "bugs": "https://github.com/mattfritz/gulp-protractor/issues",
   "author": {
-    "name": "Steffen Müller",
+    "name": "Matt Fritz",
     "email": "",
-    "url": "https://github.com/steffenmllr"
+    "url": "https://github.com/mattfritz"
   },
-  "contributors": [
-    {
-      "name": "Robbin Habermehl",
-      "email": "robbin@habermehl.net"
-    }
-  ],
   "main": "./index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mllrsohn/gulp-protractor.git"
+    "url": "git://github.com/mattfritz/gulp-protractor.git"
   },
   "scripts": {
     "test": "mocha"
   },
   "dependencies": {
+    "async": "^1.5.0",
+    "dargs": "^4.0.1",
     "event-stream": "^3.1.4",
-    "async": ">=0.7.0 <1.0.0",
-    "dargs": ">=0.1.0 <4.0.0",
     "gulp-util": ">=2.2.14 <4.0.0",
     "protractor": "^3.0.0"
   },
