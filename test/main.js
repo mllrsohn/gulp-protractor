@@ -22,7 +22,7 @@ var winExt = /^win/.test(process.platform)?'.cmd':'';
 describe('gulp-protactor: getProtractorDir', function() {
 
     it('should find the protractor installation', function(done) {
-		expect(getProtractorDir()).to.equal(path.resolve('./node_modules/protractor/bin'));
+		expect(getProtractorDir()).to.equal(path.resolve('./node_modules/.bin'));
 		done();
 	});
 });
