@@ -1,10 +1,11 @@
+var isWindows = /^win/.test(process.platform)
+var winExt = isWindows ? ".cmd" : "";
 var es = require('event-stream');
-var fs = require('fs');
 var path = require('path');
+var fs = require('fs');
 var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
-var winExt = /^win/.test(process.platform)?".cmd":"";
 
 // optimization: cache for protractor binaries directory
 var protractorDir = null;
@@ -52,7 +53,8 @@ var protractor = function(options) {
       args.unshift(options.configFile);
     }
 
-    child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
+    child = child_process.exec('protractor' + winExt, args, {
+      cwd: getProtractorDir(),
       stdio: 'inherit',
       env: process.env
     }).on('exit', function(code) {
@@ -82,7 +84,8 @@ var webdriver_update = function(opts, cb) {
       });
     }
   }
-  child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
+  child_process.exec('webdriver-manager' + winExt, args, {
+    cwd: getProtractorDir(),
     stdio: 'inherit'
   }).once('close', callback);
 };
@@ -94,7 +97,8 @@ var webdriver_update_specific = function(opts) {
 webdriver_update.bind(null, ["ie", "chrome"])
 
 var webdriver_standalone = function(cb) {
-  var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
+  var child = child_process.exec('webdriver-manager' + winExt, ['start'], {
+    cwd: getProtractorDir(),
     stdio: 'inherit'
   }).once('close', cb);
 };
