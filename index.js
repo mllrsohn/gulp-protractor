@@ -1,7 +1,7 @@
 var isWindows = /^win/.test(process.platform)
 var winExt = isWindows ? ".cmd" : "";
+var path = isWindows ? require('path').win32 : require('path');
 var es = require('event-stream');
-var path = require('path');
 var fs = require('fs');
 var child_process = require('child_process');
 var async = require('async');
