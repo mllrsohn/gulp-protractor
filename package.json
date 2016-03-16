@@ -32,7 +32,7 @@
     "dargs": "~4.0.1",
     "event-stream": "~3.3.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": "~3.0.0"
+    "protractor": "~3.1.1"
   },
   "devDependencies": {
     "mocha": ">=1.18.2 <3.0.0",
