@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0]
+### Upgraded Protractor version to 3.2.2
+- 
+## [2.2.0]
+### Changed
+-
+
 ## [2.1.0]
 ### Changed
 - Reverted static bin reference to fix Windows `webdriver_update`
