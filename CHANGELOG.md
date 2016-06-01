@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0]
+- Upgraded Protractor version to '3.3.0'
+
 ## [2.3.0]
 - Upgraded Protractor version to '3.2.2'
 
