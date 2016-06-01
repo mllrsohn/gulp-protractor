@@ -32,7 +32,7 @@
     "dargs": "^4.1.0",
     "event-stream": "~3.3.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": "~3.2.2"
+    "protractor": "~3.3.0"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
