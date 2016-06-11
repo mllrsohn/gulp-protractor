@@ -17,6 +17,7 @@ var protractor = require("gulp-protractor").protractor;
 
 gulp.src(["./src/tests/*.js"])
 	.pipe(protractor({
+                // autoStartStop: true,
 		configFile: "test/protractor.config.js",
 		args: ['--baseUrl', 'http://127.0.0.1:8000']
 	}))
@@ -24,13 +25,15 @@ gulp.src(["./src/tests/*.js"])
 ```
 
 ### Protractor Webdriver
-You have to update and start a standalone selenium server. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server).
+You may have to update and start a standalone selenium server depending on your configuration. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server).
 
 You can also ensure that the driver is installed by using the `webdriver_update` task. Have a look at the example folder.
 
-You have 2 options to start the selenium server.
+You have 3 options to start the selenium server.
 
-The first one is to let Protractor handle it automatically, including stopping it once your tests are done.
+The first, and easiest option is to use the `autoStartStop` configuration option highlighted in the example above. It will update and start the latest version of webdriver.
+
+The second one is to let Protractor handle it automatically, including stopping it once your tests are done.
 To do that, simply point to the selenium jar in the protractor config file (you will need to update the version number accordingly) instead of the address:
 
 ```javascript
@@ -39,7 +42,7 @@ To do that, simply point to the selenium jar in the protractor config file (you 
   // seleniumAddress: 'http://localhost:4444/wd/hub',
 ```
 
-The second option is to let the gulp task handle it with the built-in webdriver snippet.
+The third option is to let the gulp task handle it with the built-in webdriver snippet.
 If you decide to start it that way, the task will keep running indefinitely.
 
 ```javascript
@@ -69,6 +72,11 @@ Default: `false`
 
 Enables Protractor's [debug mode](https://github.com/angular/protractor/blob/master/docs/debugging.md), which can be used to pause tests during execution and to view stack traces.
 
+#### options.autoStartStop
+Type: `Boolean`
+Default: `false`
+
+Automatically download the latest webdriver, start it before Protractor, and kill it when Protractor completes.
 
 # Running Protractor without a plugin
 If you want to avoid using a plugin at all, here are gulp tasks which install the webdriver and start protractor:
