@@ -94,7 +94,7 @@ var webdriver_update_specific = function(opts) {
 webdriver_update.bind(null, ["ie", "chrome"])
 
 var webdriver_standalone = function(cb) {
-  var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
+  return child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
     stdio: 'inherit'
   }).once('close', cb);
 };
