@@ -55,7 +55,7 @@ var protractor = function(options) {
     child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
       stdio: 'inherit',
       env: process.env
-    }).on('exit', function(code) {
+    }).on('close', function(code) {
       if (child) {
         child.kill();
       }
