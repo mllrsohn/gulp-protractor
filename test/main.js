@@ -126,7 +126,7 @@ describe('gulp-protractor: protractor', function() {
     var fakeProcess = new events.EventEmitter();
     var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
       child_process.spawn.restore();
-      process.nextTick(function() { fakeProcess.emit('exit', 255) });
+      process.nextTick(function() { fakeProcess.emit('close', 255) });
       fakeProcess.kill = function() {};
       return fakeProcess;
     });
