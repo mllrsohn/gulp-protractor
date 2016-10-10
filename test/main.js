@@ -2,207 +2,206 @@
 'use strict';
 
 var fs = require('fs'),
-    es = require('event-stream'),
-    expect = require('expect.js'),
-    sinon = require('sinon'),
-    path = require('path');
+  es = require('event-stream'),
+  expect = require('expect.js'),
+  sinon = require('sinon'),
+  path = require('path');
 
 require('mocha');
 
 var gutil = require('gulp-util'),
-    protactor = require('../').protractor,
-    webdriver = require('../').webdriver,
-    getProtractorDir = require('../').getProtractorDir,
-    child_process = require('child_process'),
-    events = require('events');
+  protractor = require('../').protractor,
+  webdriver = require('../').webdriver,
+  getProtractorDir = require('../').getProtractorDir,
+  child_process = require('child_process'),
+  events = require('events');
 
 var winExt = /^win/.test(process.platform)?'.cmd':'';
 
 
-describe('gulp-protactor: getProtractorDir', function() {
+describe('gulp-protractor: getProtractorDir', function() {
 
-    it('should find the protractor installation', function(done) {
-		expect(getProtractorDir()).to.equal(path.resolve('./node_modules/.bin'));
-		done();
-	});
+  it('should find the protractor installation', function(done) {
+    expect(getProtractorDir()).to.equal(path.resolve('./node_modules/.bin'));
+    done();
+  });
 });
 
-	
-describe('gulp-protactor: protactor', function() {
+describe('gulp-protractor: protractor', function() {
 
-    it('should pass in the args into the protactor call', function(done) {
-        var fakeProcess = new events.EventEmitter();
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+  it('should pass in the args into the protractor call', function(done) {
+    var fakeProcess = new events.EventEmitter();
+    var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
-            expect(path.basename(cmd)).to.equal('protractor' + winExt);
-            expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--browser');
-            expect(args[2]).to.equal('Chrome');
-            expect(args[3]).to.equal('--chrome-only');
-            child_process.spawn.restore();
-            done();
+      expect(path.basename(cmd)).to.equal('protractor' + winExt);
+      expect(path.basename(args[0])).to.equal('protractor.config.js');
+      expect(args[1]).to.equal('--browser');
+      expect(args[2]).to.equal('Chrome');
+      expect(args[3]).to.equal('--chrome-only');
+      child_process.spawn.restore();
+      done();
 
-            return new events.EventEmitter();
-        });
-        var srcFile = new gutil.File({
-            path: 'test/fixtures/test.js',
-            cwd: 'test/',
-            base: 'test/fixtures',
-            contents: null
-        });
-
-        var stream = protactor({
-            configFile: 'test/fixtures/protactor.config.js',
-            args: [
-                '--browser', 'Chrome',
-                '--chrome-only'
-            ]
-        });
-
-        stream.write(srcFile);
-        stream.end();
+      return new events.EventEmitter();
+    });
+    var srcFile = new gutil.File({
+      path: 'test/fixtures/test.js',
+      cwd: 'test/',
+      base: 'test/fixtures',
+      contents: null
     });
 
-    it('should pass the test-files to protactor via arg', function(done) {
-        var fakeProcess = new events.EventEmitter();
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-
-            expect(path.basename(cmd)).to.equal('protractor'+winExt);
-            expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.equal('--specs');
-            expect(args[2]).to.equal('test/fixtures/test.js');
-
-            child_process.spawn.restore();
-            done();
-
-            return new events.EventEmitter();
-        });
-
-        var srcFile = new gutil.File({
-            path: 'test/fixtures/test.js',
-            cwd: 'test/',
-            base: 'test/fixtures',
-            contents: null
-        });
-
-        var stream = protactor({
-            configFile: 'test/fixtures/protactor.config.js'
-        });
-
-        stream.write(srcFile);
-        stream.end();
-
+    var stream = protractor({
+      configFile: 'test/fixtures/protractor.config.js',
+      args: [
+        '--browser', 'Chrome',
+        '--chrome-only'
+      ]
     });
 
-    it('shouldnt pass the test-files to protactor if there are none', function(done) {
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+    stream.write(srcFile);
+    stream.end();
+  });
 
-            expect(path.basename(cmd)).to.equal('protractor'+winExt);
-            expect(path.basename(args[0])).to.equal('protactor.config.js');
-            expect(args[1]).to.be(undefined);
-            expect(args[2]).to.be(undefined);
+  it('should pass the test-files to protractor via arg', function(done) {
+    var fakeProcess = new events.EventEmitter();
+    var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
 
-            child_process.spawn.restore();
-            done();
+      expect(path.basename(cmd)).to.equal('protractor'+winExt);
+      expect(path.basename(args[0])).to.equal('protractor.config.js');
+      expect(args[1]).to.equal('--specs');
+      expect(args[2]).to.equal('test/fixtures/test.js');
 
-            return new events.EventEmitter();
-        });
+      child_process.spawn.restore();
+      done();
 
-        var srcFile = new gutil.File({
-            path: 'test/fixtures/test.js',
-            cwd: 'test/',
-            base: 'test/fixtures',
-            contents: null
-        });
-
-        var stream = protactor({
-            configFile: 'test/fixtures/protactor.config.js'
-        });
-
-        stream.end();
-
+      return new events.EventEmitter();
     });
 
-    it('should propogate protactor exit code', function(done) {
-        var fakeProcess = new events.EventEmitter();
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-            child_process.spawn.restore();
-            process.nextTick(function() { fakeProcess.emit('exit', 255) });
-            fakeProcess.kill = function() {};
-            return fakeProcess;
-        });
-
-        var srcFile = new gutil.File({
-            path: 'test/fixtures/test.js',
-            cwd: 'test/',
-            base: 'test/fixtures',
-            contents: null
-        });
-
-        var stream = protactor({
-            configFile: 'test/fixtures/protactor.config.js'
-        });
-
-        stream.write(srcFile);
-        stream.end();
-        stream.on('error', function(err) {
-            done();
-        });
+    var srcFile = new gutil.File({
+      path: 'test/fixtures/test.js',
+      cwd: 'test/',
+      base: 'test/fixtures',
+      contents: null
     });
+
+    var stream = protractor({
+      configFile: 'test/fixtures/protractor.config.js'
+    });
+
+    stream.write(srcFile);
+    stream.end();
+
+  });
+
+  it('shouldnt pass the test-files to protractor if there are none', function(done) {
+    var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+
+      expect(path.basename(cmd)).to.equal('protractor'+winExt);
+      expect(path.basename(args[0])).to.equal('protractor.config.js');
+      expect(args[1]).to.be(undefined);
+      expect(args[2]).to.be(undefined);
+
+      child_process.spawn.restore();
+      done();
+
+      return new events.EventEmitter();
+    });
+
+    var srcFile = new gutil.File({
+      path: 'test/fixtures/test.js',
+      cwd: 'test/',
+      base: 'test/fixtures',
+      contents: null
+    });
+
+    var stream = protractor({
+      configFile: 'test/fixtures/protractor.config.js'
+    });
+
+    stream.end();
+
+  });
+
+  it('should propogate protractor exit code', function(done) {
+    var fakeProcess = new events.EventEmitter();
+    var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+      child_process.spawn.restore();
+      process.nextTick(function() { fakeProcess.emit('exit', 255) });
+      fakeProcess.kill = function() {};
+      return fakeProcess;
+    });
+
+    var srcFile = new gutil.File({
+      path: 'test/fixtures/test.js',
+      cwd: 'test/',
+      base: 'test/fixtures',
+      contents: null
+    });
+
+    var stream = protractor({
+      configFile: 'test/fixtures/protractor.config.js'
+    });
+
+    stream.write(srcFile);
+    stream.end();
+    stream.on('error', function(err) {
+      done();
+    });
+  });
 });
 
 
-describe('gulp-protactor: webdriver', function() {
+describe('gulp-protractor: webdriver', function() {
 
-    it.skip('should call update and then start on the webdriver-manager', function(done) {
+  it.skip('should call update and then start on the webdriver-manager', function(done) {
 
-        var fakeProcess = new events.EventEmitter();
-        var seconds_call = false;
-        var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-            expect(path.basename(cmd)).to.equal('webdriver-manager'+winExt);
-            if (!seconds_call) {
-                expect(args[0]).to.equal('update');
-            } else {
-                expect(args[0]).to.equal('start');
-                child_process.spawn.restore();
-                done();
-            }
-            return fakeProcess;
-        });
-
-        var wd = webdriver();
-        setTimeout(function() {
-            seconds_call = true;
-            fakeProcess.emit('close');
-        }, 100);
-
-
+    var fakeProcess = new events.EventEmitter();
+    var seconds_call = false;
+    var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+      expect(path.basename(cmd)).to.equal('webdriver-manager'+winExt);
+      if (!seconds_call) {
+        expect(args[0]).to.equal('update');
+      } else {
+        expect(args[0]).to.equal('start');
+        child_process.spawn.restore();
+        done();
+      }
+      return fakeProcess;
     });
 
-    // it('should propogate protactor exit code', function(done) {
-    //     var fakeProcess = new events.EventEmitter();
-    //     var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-    //         child_process.spawn.restore();
-    //         process.nextTick(function() { fakeProcess.emit('exit', 255) });
-    //         fakeProcess.kill = function() {};
-    //         return fakeProcess;
-    //     });
+    var wd = webdriver();
+    setTimeout(function() {
+      seconds_call = true;
+      fakeProcess.emit('close');
+    }, 100);
 
-    //     var srcFile = new gutil.File({
-    //         path: 'test/fixtures/test.js',
-    //         cwd: 'test/',
-    //         base: 'test/fixtures',
-    //         contents: null
-    //     });
 
-    //     var stream = protactor({
-    //         configFile: 'test/fixtures/protactor.config.js'
-    //     });
+  });
 
-    //     stream.write(srcFile);
-    //     stream.end();
-    //     stream.on('error', function(err) {
-    //         done();
-    //     });
-    // });
+  // it('should propogate protractor exit code', function(done) {
+  //     var fakeProcess = new events.EventEmitter();
+  //     var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
+  //         child_process.spawn.restore();
+  //         process.nextTick(function() { fakeProcess.emit('exit', 255) });
+  //         fakeProcess.kill = function() {};
+  //         return fakeProcess;
+  //     });
+
+  //     var srcFile = new gutil.File({
+  //         path: 'test/fixtures/test.js',
+  //         cwd: 'test/',
+  //         base: 'test/fixtures',
+  //         contents: null
+  //     });
+
+  //     var stream = protractor({
+  //         configFile: 'test/fixtures/protractor.config.js'
+  //     });
+
+  //     stream.write(srcFile);
+  //     stream.end();
+  //     stream.on('error', function(err) {
+  //         done();
+  //     });
+  // });
 });

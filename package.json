@@ -1,6 +1,6 @@
 {
   "name": "gulp-protractor",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "A helper for protactor and gulp",
   "keywords": [
     "gulpfriendly",
@@ -28,24 +28,21 @@
     "test": "mocha"
   },
   "dependencies": {
-    "event-stream": "^3.1.4",
-    "async": ">=0.7.0 <1.0.0",
-    "dargs": ">=0.1.0 <4.0.0",
+    "async": "^1.5.2",
+    "dargs": "^4.1.0",
+    "event-stream": "~3.3.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": "^2.0.0"
+    "protractor": ">=4 <5"
   },
   "devDependencies": {
-    "mocha": ">=1.18.2 <3.0.0",
-    "sinon": "^1.9.1",
-    "expect.js": "^0.3.1"
+    "expect.js": "~0.3.1",
+    "mocha": "^2.4.5",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.3"
   },
   "engines": {
-    "node": ">=0.10.0",
+    "node": ">=4.2.0",
     "npm": ">=1.2.10"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ]
+  "license": "MIT"
 }

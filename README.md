@@ -4,10 +4,10 @@
 
 ## Usage
 
-First, install `gulp-protractor` AND `protractor` as a development dependency:
+First, install `gulp-protractor` as a development dependency:
 
 ```shell
-npm install --save-dev gulp-protractor protractor
+npm install --save-dev gulp-protractor
 ```
 
 Then, add it to your `gulpfile.js`:
@@ -24,13 +24,13 @@ gulp.src(["./src/tests/*.js"])
 ```
 
 ### Protractor Webdriver
-You have to update and start a standalone selenium server. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server).  
+You have to update and start a standalone selenium server. [Please read the offical instructions](https://github.com/angular/protractor#appendix-a-setting-up-a-standalone-selenium-server).
 
 You can also ensure that the driver is installed by using the `webdriver_update` task. Have a look at the example folder.
 
-You have 2 options to start the selenium server.  
+You have 2 options to start the selenium server.
 
-The first one is to let Protractor handle it automatically, including stopping it once your tests are done.  
+The first one is to let Protractor handle it automatically, including stopping it once your tests are done.
 To do that, simply point to the selenium jar in the protractor config file (you will need to update the version number accordingly) instead of the address:
 
 ```javascript
@@ -39,8 +39,8 @@ To do that, simply point to the selenium jar in the protractor config file (you 
   // seleniumAddress: 'http://localhost:4444/wd/hub',
 ```
 
-The second option is to let the gulp task handle it with the built-in webdriver snippet.  
-If you decide to start it that way, the task will keep running indefintely.
+The second option is to let the gulp task handle it with the built-in webdriver snippet.
+If you decide to start it that way, the task will keep running indefinitely.
 
 ```javascript
 var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
@@ -52,13 +52,13 @@ gulp.task('webdriver_standalone', webdriver_standalone);
 ### protractor(options)
 
 #### options.configFile
-Type: `String`  
+Type: `String`
 Default: `null`
 
 The path to your protractor config
 
 #### options.args
-Type: `Array`  
+Type: `Array`
 Default: `[]`
 
 Arguments get passed directly to the protractor call [Read the docs for more information](https://github.com/angular/protractor/blob/master/docs/getting-started.md#setup-and-config)
