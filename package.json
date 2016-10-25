@@ -1,6 +1,6 @@
 {
   "name": "gulp-protractor",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "A helper for protactor and gulp",
   "keywords": [
     "gulpfriendly",
@@ -32,7 +32,7 @@
     "dargs": "^4.1.0",
     "event-stream": "~3.3.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": "~3.3.0"
+    "protractor": ">=4 <5"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
