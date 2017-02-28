@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  - '0.10'
+  - '6.x'
+  - '7.5.0'
 before_install:
   - currentfolder=${PWD##*/}
   - if [ "$currentfolder" != 'generator-gulp-plugin' ]; then cd .. && eval "mv $currentfolder generator-gulp-plugin" && cd generator-gulp-plugin; fi
