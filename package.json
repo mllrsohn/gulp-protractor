@@ -28,15 +28,15 @@
     "test": "mocha"
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "dargs": "^4.1.0",
+    "async": "^2.1.5",
+    "dargs": "^5.1.0",
     "event-stream": "~3.3.0",
     "gulp-util": ">=2.2.14 <4.0.0",
-    "protractor": ">=4 <5"
+    "protractor": "^5"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
-    "mocha": "^2.4.5",
+    "mocha": "^3.2.0",
     "rewire": "^2.5.1",
     "sinon": "^1.17.3"
   },
