@@ -17,6 +17,11 @@
     {
       "name": "Robbin Habermehl",
       "email": "robbin@habermehl.net"
+    },
+    {
+      "name": "Rahul Raut",
+      "email": "rahul@raut.me",
+      "url": "https://github.com/rahulmr"
     }
   ],
   "main": "./index.js",
@@ -25,6 +30,7 @@
     "url": "git://github.com/mllrsohn/gulp-protractor.git"
   },
   "scripts": {
+    "wd:update": "webdriver-manager update",
     "test": "mocha"
   },
   "dependencies": {
