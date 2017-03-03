@@ -16,7 +16,7 @@ gulp.task('e2etests:run', 'runs e2etests using protractor.conf', ['e2etests:serv
 
 	gulp.src(['tests/e2e/**/*.js'], { read:false })
 		.pipe(gp.protractor({
-			configFile: './protractor.conf.js',
+			configFile: 'protractor.conf.js',
 			args: ['--baseUrl', 'http://' + server.address().address + ':' + server.address().port]
 		})).on('error', function(e) {
 			server.close();
@@ -33,5 +33,5 @@ gulp.task('e2etests:run', 'runs e2etests using protractor.conf', ['e2etests:serv
 });
 
 gulp.task('e2etests:server', 'starts a development webserver', function(cb) {
-	server.listen(9001, cb);
+	server.listen(9001, 'localhost', cb);
 });

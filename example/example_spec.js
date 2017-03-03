@@ -15,16 +15,16 @@ describe('angularjs homepage', function() {
     beforeEach(function() {
       browser.get('http://www.angularjs.org');
 
-      todoList = element.all(by.repeater('todo in todos'));
+      todoList = element.all(by.repeater('todo in todoList.todos'));
     });
 
     it('should list todos', function() {
       expect(todoList.count()).toEqual(2);
-      expect(todoList.get(1).getText()).toEqual('build an angular app');
+      expect(todoList.get(1).getText()).toEqual('build an AngularJS app');
     });
 
     it('should add a todo', function() {
-      var addTodo = element(by.model('todoText'));
+      var addTodo = element(by.model('todoList.todoText'));
       var addButton = element(by.css('[value="add"]'));
 
       addTodo.sendKeys('write a protractor test');

@@ -1,11 +1,15 @@
 {
   "name": "example_2-gulp-protractor",
   "version": "0.0.1",
-  "description": "",
+  "description": "example for gulp protractor",
+  "scripts": {
+    "wd:update" : "webdriver-manager update",
+    "wd:start" : "webdriver-manager start"
+  },
   "devDependencies": {
     "gulp": "latest",
-    "gulp-help": "~0.1.4",
-    "gulp-protractor": "0.0.7",
+    "gulp-help": "^1.6.1",
+    "gulp-protractor": "4.0.0",
     "express": "3.5.0",
     "yargs": "^1.2.1"
   }
