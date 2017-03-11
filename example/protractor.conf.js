@@ -13,6 +13,8 @@ exports.config = {
     'browserName': 'chrome'
   },
 
+  allScriptsTimeout: 40000,
+
   // Options to be passed to Jasmine-node.
   jasmineNodeOpts: {
     showColors: true,
