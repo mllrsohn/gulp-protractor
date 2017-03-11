@@ -2,6 +2,9 @@
   "name": "example-gulp-protractor",
   "version": "0.0.1",
   "description": "",
+  "scripts": {
+    "test": "gulp protractor"
+  },
   "devDependencies": {
     "gulp": "latest",
     "protractor": "latest"
