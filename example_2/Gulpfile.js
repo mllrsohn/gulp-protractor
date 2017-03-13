@@ -12,7 +12,7 @@ var isCI = args.type === 'ci';
 // Download and update the selenium driver
 gulp.task('e2etests:webdriver_manager_update', 'updates the selenium server standalone jar file ', gp.webdriver_update);
 
-gulp.task('e2etests:run', 'runs e2etests using protractor.conf', ['e2etests:server'], function(cb) {
+gulp.task('e2etests:run', 'runs e2etests using protractor.conf', ['e2etests:server', 'e2etests:webdriver_manager_update'], function(cb) {
 
 	gulp.src(['tests/e2e/**/*.js'], { read:false })
 		.pipe(gp.protractor({

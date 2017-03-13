@@ -4,7 +4,8 @@
   "description": "example for gulp protractor",
   "scripts": {
     "wd:update" : "webdriver-manager update",
-    "wd:start" : "webdriver-manager start"
+    "wd:start" : "webdriver-manager start",
+    "e2e" : "gulp e2etests:run"
   },
   "devDependencies": {
     "gulp": "latest",
