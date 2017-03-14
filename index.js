@@ -84,6 +84,7 @@ var protractor = function(options) {
 	});
 };
 
+<<<<<<< HEAD
 var wdUpdate = function(opts, cb) {
 	var callback = (cb ? cb : opts);
 	var options = (cb ? opts : null);
@@ -98,6 +99,27 @@ var wdUpdate = function(opts, cb) {
 	childProcess.spawn(path.resolve(getProtractorDir() + '/webdriver-manager' + winExt), args, {
 		stdio: 'inherit'
 	}).once('close', callback);
+=======
+var webdriver_update = function(opts, cb) {
+  var callback = (cb ? cb : opts);
+  var options = (cb ? opts : null);
+  var args = ["update", "--standalone"];
+  if (options) {
+	if (options.webdriverManagerArgs) {
+		options.webdriverManagerArgs.forEach(function(element) {
+			args.push(element);
+		});
+	}
+    if (options.browsers) {
+      options.browsers.forEach(function(element, index, array) {
+        args.push("--" + element);
+      });
+    }
+  }
+  child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
+    stdio: 'inherit'
+  }).once('close', callback);
+>>>>>>> remotes/origin/master
 };
 
 var webdriverUpdateSpecific = function(opts) {
