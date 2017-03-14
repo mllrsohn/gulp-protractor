@@ -4,36 +4,35 @@ var path = require('path');
 var child_process = require('child_process');
 var async = require('async');
 var PluginError = require('gulp-util').PluginError;
-var winExt = /^win/.test(process.platform)?".cmd":"";
+var winExt = /^win/.test(process.platform)?'.cmd':'';
 
 // optimization: cache for protractor binaries directory
-var protractorDir = null;
+var binDir = null;
 
-function getProtractorDir() {
-  if (protractorDir) {
-    return protractorDir;
-  }
-  var result = require.resolve("protractor");
+function getBinDir() {
+  if (binDir) return binDir;
+  var result = require.resolve('protractor');
   if (result) {
     // result is now something like
     // c:\\Source\\gulp-protractor\\node_modules\\protractor\\lib\\protractor.js
-    protractorDir = path.resolve(path.join(path.dirname(result), "..", "..", ".bin"));
-    return protractorDir;
+    return path.resolve(path.join(path.dirname(result), '..', '..', '.bin'));
   }
-  throw new Error("No protractor installation found.");
+  throw new Error('No protractor installation found.');
 }
 
-var protractor = function(options) {
+function protractor(options) {
   var files = [],
-    child, args;
+      args;
 
   options = options || {};
   args = options.args || [];
 
-  return es.through(function(file) {
+  function write(file) {
     files.push(file.path);
     this.push(file);
-  }, function() {
+  }
+
+  function end() {
     var stream = this;
 
     // Enable debug mode
@@ -52,29 +51,39 @@ var protractor = function(options) {
       args.unshift(options.configFile);
     }
 
-    child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
-      stdio: 'inherit',
-      env: process.env
-    }).on('exit', function(code) {
-      if (child) {
-        child.kill();
-      }
-      if (stream) {
-        if (code) {
-          stream.emit('error', new PluginError('gulp-protractor', 'protractor exited with code ' + code));
-        }
-        else {
-          stream.emit('end');
-        }
-      }
-    });
-  });
+    if (options.autoStartStop) {
+      webdriver_update(null, function() {
+        args.push('--seleniumServerJar', getSeleniumJarPath());
+        spawnProtractor(args, stream);
+      });
+    } else {
+      spawnProtractor(args, stream);
+    }
+  }
+  return es.through(write, end);
 };
 
-var webdriver_update = function(opts, cb) {
+function spawnProtractor(args, stream) {
+  var child = child_process.spawn(path.resolve(getBinDir() + '/protractor'+winExt), args, {
+    stdio: 'inherit',
+    env: process.env
+  }).on('exit', function(code) {
+    if (child) child.kill();
+    if (stream) {
+      if (code) {
+        stream.emit('error', new PluginError('gulp-protractor', 'protractor exited with code ' + code));
+      }
+      else {
+        stream.emit('end');
+      }
+    }
+  });
+}
+
+function webdriver_update(opts, cb) {
   var callback = (cb ? cb : opts);
   var options = (cb ? opts : null);
-  var args = ["update", "--standalone"];
+  var args = ['update', '--standalone'];
   if (options) {
 	if (options.webdriverManagerArgs) {
 		options.webdriverManagerArgs.forEach(function(element) {
@@ -83,29 +92,40 @@ var webdriver_update = function(opts, cb) {
 	}
     if (options.browsers) {
       options.browsers.forEach(function(element, index, array) {
-        args.push("--" + element);
+        args.push('--' + element);
       });
     }
   }
-  child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
+  child_process.spawn(path.resolve(getBinDir() + '/webdriver-manager'+winExt), args, {
     stdio: 'inherit'
   }).once('close', callback);
 };
 
-var webdriver_update_specific = function(opts) {
+function webdriver_update_specific(opts) {
   return webdriver_update.bind(this, opts);
 };
 
-webdriver_update.bind(null, ["ie", "chrome"])
+webdriver_update.bind(null, ['ie', 'chrome'])
 
-var webdriver_standalone = function(cb) {
-  var child = child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), ['start'], {
+function webdriver_standalone(cb) {
+  var webdriverManager = child_process.spawn(path.resolve(getBinDir() + '/webdriver-manager'+winExt), ['start'], {
     stdio: 'inherit'
-  }).once('close', cb);
+  });
+  webdriverManager.once('close', cb);
+  return webdriverManager;
 };
 
+function getSeleniumJarPath() {
+  var seleniumDir = path.resolve(path.join(getBinDir(), '..', 'protractor', 'selenium'));
+  var files = fs.readdirSync(seleniumDir)
+  var seleniumJar = files.find(function(file) {
+    return file.match(/^selenium-server.*\.jar$/);
+  });
+  return path.join(seleniumDir, seleniumJar);
+}
+
 module.exports = {
-  getProtractorDir: getProtractorDir,
+  getProtractorDir: getBinDir,
   protractor: protractor,
   webdriver_standalone: webdriver_standalone,
   webdriver_update: webdriver_update,
