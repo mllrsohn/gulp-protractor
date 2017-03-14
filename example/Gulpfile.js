@@ -10,9 +10,9 @@ var webdriver_standalone = require('../').webdriver_standalone;
 // Download and update the selenium driver
 var webdriver_update = require('../').webdriver_update_specific;
 
-// Downloads the selenium webdriver
+// Downloads the selenium webdriver - stupid solution to pass extra args like ignore_ssl
 gulp.task('webdriver_update', webdriver_update({
-	browsers: ['chrome']
+	browsers: ['ignore_ssl']
 }));
 
 // Start the standalone selenium server

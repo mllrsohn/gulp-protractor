@@ -14,13 +14,13 @@ gulp.task('e2etests:webdriver_manager_update', 'updates the selenium server stan
 
 gulp.task('e2etests:run', 'runs e2etests using protractor.conf', ['e2etests:server', 'e2etests:webdriver_manager_update'], function(cb) {
 
-	gulp.src(['tests/e2e/**/*.js'], { read:false })
+	gulp.src(['tests/e2e/**/*.js'], { read: false })
 		.pipe(gp.protractor({
 			configFile: 'protractor.conf.js',
 			args: ['--baseUrl', 'http://' + server.address().address + ':' + server.address().port]
 		})).on('error', function(e) {
 			server.close();
-			if(isCI) {
+			if (isCI) {
 				throw e;
 			} else {
 				console.log(e);

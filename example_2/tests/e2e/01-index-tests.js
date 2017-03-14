@@ -1,14 +1,14 @@
 describe('WebApp', function() {
 
-  describe('index page', function(){
+	describe('index page', function() {
 
-    browser.get('/');
+		browser.get('/');
 
-    it('should show the page', function() {
-      expect(element.all(by.css('h1')).
-        first().getText()).toBe("Headline 2");
-    });
+		it('should show the page', function() {
+			expect(element.all(by.css('h1')).
+				first().getText()).toBe("Headline 2");
+		});
 
-  });
+	});
 
 });
