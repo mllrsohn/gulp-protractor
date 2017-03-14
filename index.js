@@ -12,8 +12,7 @@ function getProtractorCli() {
 	var result = require.resolve('protractor');
 	if (result) {
 		return result.replace('index', 'cli');
-	}
-	else {
+	} else {
 		throw new Error('Please check whether protractor is installed or not.');
 	}
 }
@@ -75,8 +74,7 @@ var protractor = function(options) {
 			if (stream) {
 				if (code) {
 					stream.emit('error', new PluginError('gulp-protractor', 'protractor exited with code ' + code));
-				}
-				else {
+				} else {
 					stream.emit('end');
 				}
 			}
@@ -84,12 +82,16 @@ var protractor = function(options) {
 	});
 };
 
-<<<<<<< HEAD
 var wdUpdate = function(opts, cb) {
 	var callback = (cb ? cb : opts);
 	var options = (cb ? opts : null);
 	var args = ['update', '--standalone'];
 	if (options) {
+		if (options.webdriverManagerArgs) {
+			options.webdriverManagerArgs.forEach(function(element) {
+				args.push(element);
+			});
+		}
 		if (options.browsers) {
 			options.browsers.forEach(function(element) {
 				args.push('--' + element);
@@ -99,27 +101,6 @@ var wdUpdate = function(opts, cb) {
 	childProcess.spawn(path.resolve(getProtractorDir() + '/webdriver-manager' + winExt), args, {
 		stdio: 'inherit'
 	}).once('close', callback);
-=======
-var webdriver_update = function(opts, cb) {
-  var callback = (cb ? cb : opts);
-  var options = (cb ? opts : null);
-  var args = ["update", "--standalone"];
-  if (options) {
-	if (options.webdriverManagerArgs) {
-		options.webdriverManagerArgs.forEach(function(element) {
-			args.push(element);
-		});
-	}
-    if (options.browsers) {
-      options.browsers.forEach(function(element, index, array) {
-        args.push("--" + element);
-      });
-    }
-  }
-  child_process.spawn(path.resolve(getProtractorDir() + '/webdriver-manager'+winExt), args, {
-    stdio: 'inherit'
-  }).once('close', callback);
->>>>>>> remotes/origin/master
 };
 
 var webdriverUpdateSpecific = function(opts) {
