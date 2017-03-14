@@ -24,7 +24,8 @@ function getProtractorDir() {
 }
 
 var protractor = function(options) {
-  var files = [],
+  var env = process.env,
+    files = [],
     child, args;
 
   options = options || {};
@@ -52,9 +53,12 @@ var protractor = function(options) {
       args.unshift(options.configFile);
     }
 
-    child = child_process.spawn(path.resolve(getProtractorDir() + '/protractor'+winExt), args, {
+    // add protractor dir to path
+    env.Path = env.Path + ';' + getProtractorDir();
+
+    child = child_process.spawn("protractor" + winExt, args, {
       stdio: 'inherit',
-      env: process.env
+      env: env
     }).on('exit', function(code) {
       if (child) {
         child.kill();
@@ -84,6 +88,11 @@ var webdriver_update = function(opts, cb) {
     if (options.browsers) {
       options.browsers.forEach(function(element, index, array) {
         args.push("--" + element);
+      });
+    }
+    if (options.args) {
+      options.args.forEach(function(element, index, array) {
+        args.push(element);
       });
     }
   }
