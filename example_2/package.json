@@ -3,15 +3,16 @@
   "version": "0.0.1",
   "description": "example for gulp protractor",
   "scripts": {
-    "wd:update" : "webdriver-manager update",
-    "wd:start" : "webdriver-manager start",
-    "e2e" : "gulp e2etests:run"
+    "wd:update": "webdriver-manager update",
+    "wd:start": "webdriver-manager start",
+    "e2e": "gulp e2etests:run"
   },
   "devDependencies": {
+    "express": "3.5.0",
     "gulp": "latest",
     "gulp-help": "^1.6.1",
-    "gulp-protractor": "4.0.0",
-    "express": "3.5.0",
+    "gulp-protractor": "mllrsohn/gulp-protractor#spawn_to_fork",
+    "jasmine": "^2.5.3",
     "yargs": "^1.2.1"
   }
 }
