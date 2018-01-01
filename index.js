@@ -2,7 +2,7 @@
 var es = require('event-stream');
 var path = require('path');
 var childProcess = require('child_process');
-var PluginError = require('gulp-util').PluginError;
+var PluginError = require('plugin-error');
 var winExt = /^win/.test(process.platform) ? '.cmd' : '';
 
 // optimization: cache for protractor binaries directory
