@@ -9,7 +9,7 @@ var fs = require('fs'),
 
 require('mocha');
 
-var gutil = require('gulp-util'),
+var Vinyl = require('vinyl'),
 	protractor = require('../').protractor,
 	webdriver = require('../').webdriver,
 	getProtractorDir = require('../').getProtractorDir,
@@ -52,7 +52,7 @@ describe('gulp-protractor: protractor', function() {
 
 			return new events.EventEmitter();
 		});
-		var srcFile = new gutil.File({
+		var srcFile = new Vinyl({
 			path: 'test/fixtures/test.js',
 			cwd: 'test/',
 			base: 'test/fixtures',
@@ -78,7 +78,7 @@ describe('gulp-protractor: protractor', function() {
 			expect(path.basename(cmd)).to.equal('cli.js');
 			expect(path.basename(args[0])).to.equal('protractor.config.js');
 			expect(args[1]).to.equal('--specs');
-			expect(args[2]).to.equal('test/fixtures/test.js');
+			expect(args[2]).to.equal(path.join('test', 'fixtures', 'test.js'));
 
 			child_process.fork.restore();
 			done();
@@ -86,7 +86,7 @@ describe('gulp-protractor: protractor', function() {
 			return new events.EventEmitter();
 		});
 
-		var srcFile = new gutil.File({
+		var srcFile = new Vinyl({
 			path: 'test/fixtures/test.js',
 			cwd: 'test/',
 			base: 'test/fixtures',
@@ -116,7 +116,7 @@ describe('gulp-protractor: protractor', function() {
 			return new events.EventEmitter();
 		});
 
-		var srcFile = new gutil.File({
+		var srcFile = new Vinyl({
 			path: 'test/fixtures/test.js',
 			cwd: 'test/',
 			base: 'test/fixtures',
@@ -140,7 +140,7 @@ describe('gulp-protractor: protractor', function() {
 			return fakeProcess;
 		});
 
-		var srcFile = new gutil.File({
+		var srcFile = new Vinyl({
 			path: 'test/fixtures/test.js',
 			cwd: 'test/',
 			base: 'test/fixtures',
@@ -196,7 +196,7 @@ describe('gulp-protractor: webdriver', function() {
 	//         return fakeProcess;
 	//     });
 
-	//     var srcFile = new gutil.File({
+	//     var srcFile = new Vinyl({
 	//         path: 'test/fixtures/test.js',
 	//         cwd: 'test/',
 	//         base: 'test/fixtures',
