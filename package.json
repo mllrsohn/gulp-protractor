@@ -36,7 +36,7 @@
   "dependencies": {
     "async": "^2.1.5",
     "dargs": "^5.1.0",
-    "event-stream": "~3.3.0",
+    "event-stream": "3.3.4",
     "plugin-error": "^0.1.2",
     "protractor": "^5"
   },
