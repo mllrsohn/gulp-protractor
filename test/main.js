@@ -131,11 +131,38 @@ describe('gulp-protractor: protractor', function() {
 
 	});
 
-	it('should propogate protractor exit code', function(done) {
+	it('should propagate protractor exit code', function(done) {
 		var fakeProcess = new events.EventEmitter();
 		var spy = sinon.stub(child_process, 'fork', function(cmd, args, options) {
 			child_process.fork.restore();
 			process.nextTick(function() { fakeProcess.emit('exit', 255) });
+			fakeProcess.kill = function() { };
+			return fakeProcess;
+		});
+
+		var srcFile = new Vinyl({
+			path: 'test/fixtures/test.js',
+			cwd: 'test/',
+			base: 'test/fixtures',
+			contents: null
+		});
+
+		var stream = protractor({
+			configFile: 'test/fixtures/protractor.config.js'
+		});
+
+		stream.write(srcFile);
+		stream.end();
+		stream.on('error', function(err) {
+			done();
+		});
+	});
+
+	it('should emit an error on code null (Out Of Memory)', function(done) {
+		var fakeProcess = new events.EventEmitter();
+		var spy = sinon.stub(child_process, 'fork', function(cmd, args, options) {
+			child_process.fork.restore();
+			process.nextTick(function() { fakeProcess.emit('exit', null, 'SIGABRT') });
 			fakeProcess.kill = function() { };
 			return fakeProcess;
 		});
@@ -186,31 +213,4 @@ describe('gulp-protractor: webdriver', function() {
 
 
 	});
-
-	// it('should propogate protractor exit code', function(done) {
-	//     var fakeProcess = new events.EventEmitter();
-	//     var spy = sinon.stub(child_process, 'spawn', function(cmd, args, options) {
-	//         child_process.spawn.restore();
-	//         process.nextTick(function() { fakeProcess.emit('exit', 255) });
-	//         fakeProcess.kill = function() {};
-	//         return fakeProcess;
-	//     });
-
-	//     var srcFile = new Vinyl({
-	//         path: 'test/fixtures/test.js',
-	//         cwd: 'test/',
-	//         base: 'test/fixtures',
-	//         contents: null
-	//     });
-
-	//     var stream = protractor({
-	//         configFile: 'test/fixtures/protractor.config.js'
-	//     });
-
-	//     stream.write(srcFile);
-	//     stream.end();
-	//     stream.on('error', function(err) {
-	//         done();
-	//     });
-	// });
 });
