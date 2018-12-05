@@ -67,13 +67,14 @@ var protractor = function(options) {
 		child = childProcess.fork(getProtractorCli(), args, {
 			stdio: 'inherit',
 			env: process.env
-		}).on('exit', function(code) {
+		}).on('exit', function(code, signal) {
 			if (child) {
 				child.kill();
 			}
 			if (stream) {
-				if (code) {
-					stream.emit('error', new PluginError('gulp-protractor', 'protractor exited with code ' + code));
+				if (code !== 0) {
+					var errorMessage = 'protractor exited with code ' + code + ' and signal ' + signal
+					stream.emit('error', new PluginError('gulp-protractor', errorMessage));
 				} else {
 					stream.emit('end');
 				}
