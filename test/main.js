@@ -11,7 +11,7 @@ require('mocha');
 
 var Vinyl = require('vinyl'),
 	protractor = require('../').protractor,
-	webdriver = require('../').webdriver,
+	webdriver_update = require('../').webdriver_update,
 	getProtractorDir = require('../').getProtractorDir,
 	getProtractorCli = require('../').getProtractorCli,
 	child_process = require('child_process'),
@@ -204,8 +204,9 @@ describe('gulp-protractor: webdriver', function() {
 			}
 			return fakeProcess;
 		});
-
-		var wd = webdriver();
+		var wd = webdriver_update({
+			browsers: ['ignore_ssl']
+		});
 		setTimeout(function() {
 			seconds_call = true;
 			fakeProcess.emit('close');
