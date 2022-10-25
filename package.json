@@ -52,5 +52,10 @@
     "node": ">=4.2.0",
     "npm": ">=1.2.10"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "files": [
+	"README.md",
+	"LICENSE",
+	"index.js"
+  ]
 }
